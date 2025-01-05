@@ -1,0 +1,20 @@
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    make \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements-cat.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+WORKDIR /app
+COPY cat_proc/cat.py /app 
+COPY cat_proc/datos /app/datos
+COPY cat_proc/wait-for-prepro.sh /app/wait-for-prepro.sh
+
+RUN ls -l /app
+
+RUN chmod +x /app/wait-for-prepro.sh
+ENTRYPOINT ["/app/wait-for-prepro.sh", "python", "cat.py"]

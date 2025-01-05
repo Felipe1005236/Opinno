@@ -1,0 +1,18 @@
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    make \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements-preml.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+COPY prepro_cat/preprocess_ml.py /app/preprocess_ml.py
+
+COPY datos /app/datos
+
+WORKDIR /app
+
+CMD ["python", "preprocess_ml.py"]

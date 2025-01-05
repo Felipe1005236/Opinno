@@ -1,0 +1,8 @@
+scikit-learn
+pandas
+nltk
+tensorflow-text==2.12.1
+bokeh
+simpleneighbors[annoy]
+tqdm
+openpyxl

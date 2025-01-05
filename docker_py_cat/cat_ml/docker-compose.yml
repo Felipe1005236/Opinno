@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  preprocess_ml:
+    build:
+      context: .
+      dockerfile: Dockerfile-preml
+    volumes:
+      - ./prepro_cat:/app
+      - ./datos:/app/datos
+    #command: python preprocess_ml.py
+
+  cat:
+    build:
+      context: .
+      dockerfile: Dockerfile-ml
+    volumes:
+      - ./cat_proc:/app
+      - ./datos:/app/datos
+    depends_on:
+      - preprocess_ml
